@@ -22,10 +22,4 @@ public class TaskService {
         scrapperService.scrapOtodom();
     }
 
-
-    @Scheduled(initialDelay = 1000, fixedDelay = 600000)
-    void test(){
-        scrapOtodomTask();
-    }
-
 }
