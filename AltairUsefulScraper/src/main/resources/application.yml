@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/scraping_data
+    username: admin
+    password: admin
+  jpa:
+    hibernate.ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+
+cron:
+  olx:
+    expression: 0 0 1 * * * # every day at 01:00
+  otodom:
+    expression: 0 0 2 * * * # every day at 02:00

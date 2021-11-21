@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=scraping_data
+      - TZ=${TZ}
+    ports:
+      - "5432:5432"
+  altair-useful-scraper:
+    image: pmeller/altair-useful-scraper
+    environment:
+      - POSTGRES_HOST=db
+      - TZ=${TZ}
+    ports:
+      - "8000:8000"
