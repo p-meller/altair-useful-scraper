@@ -19,7 +19,6 @@ public class OtodomEstateScraper extends AbstractEstateScraper {
 
     public static final String SOURCE = "Otodom";
     private final Pattern decimalPattern;
-    private final Random random = new Random();
 
     Map<String, Estate> estateDetails;
 
@@ -73,28 +72,21 @@ public class OtodomEstateScraper extends AbstractEstateScraper {
 
                 estateDetails.put(link, estate);
 
-                log.info(estate.toString());
+                log.debug(estate.toString());
 
             }
 
             currentUrl = String.format("%s&page=%d", this.url, page);
             page += 1;
 
-            long sleepTime = (long) random.nextDouble(1, 2) * Duration.between(start, stop).toMillis();
-            try {
-                Thread.sleep(sleepTime);
-                log.info(String.format("Sleep for %d milliseconds",sleepTime));
-            } catch (InterruptedException e) {
-                log.error("Error during sleep", e);
-                Thread.currentThread().interrupt();
-            }
+            sleepForRandomizedDuration(Duration.between(start, stop));
 
         }
         this.links.addAll(linkSet);
     }
 
     @Override
-    protected Estate scrapData(String url) throws IOException {
+    protected Estate scrapData(String url) {
         return estateDetails.get(url);
     }
 

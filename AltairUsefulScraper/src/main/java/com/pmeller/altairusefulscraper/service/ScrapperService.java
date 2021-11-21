@@ -42,7 +42,7 @@ public class ScrapperService {
                     continue;
                 }
                 estateRepository.save(estate);
-                log.info(estate.toString());
+                log.debug(estate.toString());
             }
             Instant end = Instant.now();
             log.info(String.format("%s scraping finished [%s]", scraperName, Duration.between(start, end)));

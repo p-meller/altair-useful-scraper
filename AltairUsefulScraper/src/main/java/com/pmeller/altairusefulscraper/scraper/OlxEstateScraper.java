@@ -9,9 +9,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +56,9 @@ public class OlxEstateScraper extends AbstractEstateScraper {
     }
 
     protected Estate scrapData(String url) throws IOException {
+        Instant start = Instant.now();
         Document doc = Jsoup.connect(url).get();
+        Instant stop = Instant.now();
 
         Element priceElement = doc.selectFirst("div[data-testid=ad-price-container]");
         if (priceElement == null) {
@@ -73,6 +78,8 @@ public class OlxEstateScraper extends AbstractEstateScraper {
 
         estate.setPricePerMeter(getDecimalFromDetails(details, "cena za m"));
         estate.setArea(getDecimalFromDetails(details, "powierzchnia"));
+
+        sleepForRandomizedDuration(Duration.between(start, stop));
 
         return estate;
     }
